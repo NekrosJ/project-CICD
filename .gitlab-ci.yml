@@ -1,13 +1,35 @@
 image: node:16
 
 stages:
+  - install
   - build
+  - test
+  - deploy
 
+# Job to install dependencies
+install:
+  stage: install
+  script:
+    - npm install
+  artifacts:
+    paths:
+      - node_modules/
+  
+# Job to build the application
 build:
   stage: build
   script:
-    - npm install
     - npm run build
   artifacts:
     paths:
       - dist/
+
+# Job to deploy the application
+deploy:
+  stage: deploy
+  script:
+    - echo "Deploying application..."
+    - echo "Add your actual deployment commands here"
+    # You can use commands like rsync, scp, or any cloud service CLI
+  only:
+    - master  # Only deploy when there are changes on the master branch
